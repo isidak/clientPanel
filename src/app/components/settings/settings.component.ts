@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import {Settings} from "../../models/Settings";
-import {SettingsService} from "../../services/settings.service";
-import {Router} from "@angular/router";
-import {FlashMessagesService} from "angular2-flash-messages";
-import {Subscription} from "rxjs";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Settings} from '../../models/Settings';
+import {SettingsService} from '../../services/settings.service';
+import {Router} from '@angular/router';
+import {FlashMessagesService} from 'angular2-flash-messages';
+import {Subscription} from 'rxjs';
+
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit, OnDestroy {
 
   settings;
-  subscription: Subscription;
+  subscription = new Subscription();
+
 
   constructor(private settingsService: SettingsService,
               private router: Router,
@@ -31,4 +33,7 @@ export class SettingsComponent implements OnInit {
   });
   }
 
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  }
 }
